@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react'
 import {loadYtScript} from '../common/ytapi'
 function Yout() {
     const [loaded, setLoaded]=useState(false);
-    
+
     console.log('Before Mount:::::::::::',window);
     useEffect(()=>{
-        loadYtScript(()=>{
-            setLoaded(true);
-        })
+        loadYtScript();
         console.log('10:::::::::',window.gapi);
        
     },[]);

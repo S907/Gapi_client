@@ -14,9 +14,11 @@ export const loadYtScript = (callback)=>{
         }
        };
     }
-    if(existScript && callback){
+    // Pass callback if you want to do additional task
+    // && callback
+    if(existScript){
         console.log('18:::::::::', callback);
-        callback;
+        // callback;
     }
 
 }
