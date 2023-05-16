@@ -1,22 +1,40 @@
 import React, { useEffect, useState } from 'react'
-import {loadYtScript} from '../common/ytapi'
+import {loadYtScript, loadExtScript} from '../common/ytapi'
 function Yout() {
     const [loaded, setLoaded]=useState(false);
+    const [stated, setStated]=useState([]);
 
     console.log('Before Mount:::::::::::',window);
+    console.log('Before Mount:::::::::::',window.gapi);
     useEffect(()=>{
-        loadYtScript();
+        // loadYtScript(()=>{
+        //     setLoaded(true)
+        // });
+        loadExtScript(setLoaded)
+        
         console.log('10:::::::::',window.gapi);
+        return ()=>{
+          window.removeEventListener('load', loadExtScript)
+        }
        
     },[]);
     useEffect(()=>{
-        if(window.gapi){
-            window.gapi.load('client', initClient);
+        console.log('15:::::::::',window.gapi);
+        if(!loaded){
+          return;
+        }else{
+          window.gapi.load('client', initClient);
         }
-    },[])
+       
+    },[loaded]);
+    // console.log('20:::::::', stated);
+
+    // const loadFunc = ()=>{
+    //         window.gapi.load('client', initClient);
+    // }
 
     const initClient = ()=>{
-        return gapi.client.init({
+         return gapi.client.init({
             'apiKey': '12443536',
             // Your API key will be automatically added to the Discovery Document URLs.
             // 'discoveryDocs': ['https://people.googleapis.com/$discovery/rest'],
@@ -39,6 +57,7 @@ function Yout() {
 
   
     console.log('After Mount:::::::::::',window.gapi);
+    // console.log('After Mount:::::::::::',initClient);
 
   return (
     <div>Yout</div>

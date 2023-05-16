@@ -5,7 +5,9 @@ export const loadYtScript = (callback)=>{
     //    console.log('5=====::::::', script);
        script.src = 'https://apis.google.com/js/api.js';
        script.id='yt-div';
-       document.body.appendChild(script);
+       script.async=true;
+       script.defer=true;
+       document.head.appendChild(script);
 
        script.onload=()=>{
         if(callback){
@@ -16,9 +18,17 @@ export const loadYtScript = (callback)=>{
     }
     // Pass callback if you want to do additional task
     // && callback
-    if(existScript){
+    if(existScript && callback){
         console.log('18:::::::::', callback);
-        // callback;
+        callback;
+        
     }
 
+}
+
+export const loadExtScript=(setStateCallback)=>{
+    const scriptTag = document.createElement('script');
+        scriptTag.src = 'https://apis.google.com/js/api.js';
+        scriptTag.addEventListener('load', setStateCallback(true));
+        document.body.appendChild(scriptTag);
 }
